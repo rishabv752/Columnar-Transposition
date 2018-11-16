@@ -1,0 +1,156 @@
+import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.io.PrintWriter;
+import java.util.Scanner;
+public class SortEncrypt
+{
+    public static String key;
+
+    
+    public SortEncrypt(){}
+     
+    public String encrypt(){
+        SortEncrypt s = new SortEncrypt();
+        Scanner sc = new Scanner(System.in);
+        //asks user for a key for the cipher
+        System.out.println("Please type a key: ");
+        String theKey = sc.nextLine();
+        key = theKey; //makes a var key equal to the input
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        List<Integer> h = new ArrayList();  
+        int hold;
+        for (int i = 0; i < key.length(); i++){
+            h.add(alphabet.indexOf(key.charAt(i)));
+            hold = alphabet.indexOf(key.charAt(i));
+            //adds the place the alphabet at index i of the key to an arraylist
+        }
+        System.out.println(h);//prints out the numbers of the letters position in the alphabet
+        //user input of string they want to encrypt
+        System.out.println("Please type a String: ");
+        String theString= sc.nextLine();
+ 
+        int x= key.length(); //key length columns
+        int y=0;
+        for (int i = 0;x*y<theString.length();i++, y++){ // creates y many rows for x columns
+        } 
+        List<List<Character>> column = new ArrayList<>();
+        for (int i = 0; i < x; i++){
+            column.add(new ArrayList<>());
+        }   
+        
+        int a = 0;
+        for(int i = 0 ; i< y; i++){
+         for (int z = 0; z<x; z++, a++){
+             if (a<theString.length()){
+                 column.get(z).add(theString.charAt(a));
+                }
+             else {
+                 column.get(z).add('x');
+                }
+            }
+        }
+        
+        PrintWriter p = new PrintWriter(System.out, true);
+        p.println(column);
+        
+        //generates order of numbers from 0-> however long the key is
+        //keeps same index but the lower numbers of the h string is given a lower number
+        List<Integer> inCopy = new ArrayList<>(h);
+        System.out.println(inCopy);
+        Collections.sort(inCopy);
+
+        List<Integer> out = new ArrayList<>();
+        for (int o : h) {
+            out.add(inCopy.indexOf(o));
+        }
+        System.out.print(out+"\n");//the list containing numbers from 0 to key.length
+        List<List<Character>> fin = new ArrayList<>();
+        for(int i = 0; i<key.length(); i++){//prints out the encrypted code depending on the key
+            int hol = out.indexOf(i);
+            fin.add(column.get(hol));
+        }
+        
+        p.println ("Encrypted:"+fin);
+        return (null);
+            
+    }
+    public String decrypt(){
+        
+        Scanner sc = new Scanner(System.in);
+        //asks user for a key for the cipher
+        System.out.println("Please type a key: ");
+        String theKey = sc.nextLine();
+        key = theKey; //makes a var key equal to the input
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        List<Integer> h = new ArrayList();  
+        int hold;
+        for (int i = 0; i < key.length(); i++){
+            h.add(alphabet.indexOf(key.charAt(i)));
+            hold = alphabet.indexOf(key.charAt(i));
+            //adds the place the alphabet at index i of the key to an arraylist
+        }
+        
+        System.out.println("Please type a String: ");
+        String theString= sc.nextLine();
+ 
+        int x= key.length(); //key length columns
+        int y=0;
+        for (int i = 0;x*y<theString.length();i++, y++){ // creates y many rows for x columns
+        } 
+        List<List<Character>> column = new ArrayList<>();
+        for (int i = 0; i < x; i++){
+            column.add(new ArrayList<>());
+        }   
+        
+        int a = 0;
+        for(int i = 0 ; i< y; i++){
+         for (int z = 0; z<x; z++, a++){
+             if (a<theString.length()){
+                 column.get(z).add(theString.charAt(a));
+                }
+             else {
+                 column.get(z).add('x');
+                }
+            }
+        }
+        
+        PrintWriter p = new PrintWriter(System.out, true);
+        
+        
+        //generates order of numbers from 0-> however long the key is
+        //keeps same index but the lower numbers of the h string is given a lower number
+        List<Integer> inCopy = new ArrayList<>(h);
+        System.out.println(inCopy);
+        Collections.sort(inCopy);
+
+        List<Integer> out = new ArrayList<>();
+        for (int o : h) {
+            out.add(inCopy.indexOf(o));
+        }
+        
+        List<List<Character>> fin = new ArrayList<>();
+        for(int i = 0; i<key.length(); i++){//prints out the encrypted code depending on the key
+            int hol = out.indexOf(i);
+            fin.add(column.get(hol));
+        }
+        
+        p.println ("Encrypted:"+fin);
+        List<Character> decr = new ArrayList<>();
+        for (int i = 0; i <key.length()-1;i++){//decryption
+            for(int j = 0; j<key.length();j++){
+                decr.add(column.get(j).get(i));
+        }
+        
+        }
+        StringBuilder sb = new StringBuilder();
+        for(Character ch: decr){
+            sb.append(ch);
+        }
+        String finals = sb.toString();
+        System.out.println("Decrypted: "+finals);
+        return (null);
+    }
+}
+
