@@ -1,0 +1,19 @@
+import java.util.Scanner;
+public class TranspositionCipher{
+    
+    public static void main (String[] args){
+        Scanner sc = new Scanner(System.in);
+        //calls the main method of the SortEncrypt class
+        SortEncrypt s = new SortEncrypt();
+        System.out.println("Do you want to Encrypt or Decrypt? Press 'e' for encrypt and 'd' for decrypt");
+        String theChoice = sc.nextLine();
+        if(theChoice.equals("e")){
+            s.encrypt();
+        }
+        else{
+            s.decrypt();
+        }
+       
+        
+    }
+}
